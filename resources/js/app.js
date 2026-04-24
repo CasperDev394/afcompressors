@@ -6,6 +6,7 @@ const app = createApp({});
 import Login from './pages/auth/Login.vue';
 // import Register from './pages/auth/Register.vue';
 import Home from './pages/Home.vue';
+import ContactPage from './pages/Contact.vue';
 
 import AdminHeader from './components/admin/Header.vue';
 import AdminSidebar from './components/admin/Sidebar.vue';
@@ -14,6 +15,7 @@ import AdminCompressors from './pages/admin/AdminCompressors.vue';
 import AdminCompressor from './pages/admin/AdminCompressor.vue';
 
 import AttachmentGallery from './components/core/AttachmentGallery.vue';
+import Breadcrumbs from './components/core/Breadcrumbs.vue';
 import HeaderApp from './components/core/Header.vue';
 import FooterApp from './components/core/Footer.vue';
 
@@ -30,6 +32,7 @@ app
     .component('Login', Login)
     // .component('Register', Register)
     .component('Home', Home)
+    .component('ContactPage', ContactPage)
 
     .component('AdminHeader', AdminHeader)
     .component('AdminSidebar', AdminSidebar)
@@ -38,6 +41,7 @@ app
     .component('AdminCompressors', AdminCompressors)
     .component('AdminCompressor', AdminCompressor)
 
+    .component('Breadcrumbs', Breadcrumbs)
     .component('HeaderApp', HeaderApp)
     .component('FooterApp', FooterApp)
 

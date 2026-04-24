@@ -30,8 +30,8 @@
     /*--color-primary-50: #E6EEF7;*/
     /*--color-primary-100: #CCDDF0;*/
     /*--color-primary-200: #99BBE1;*/
-    /*--color-primary-300: #6699D2;*/
-    /*--color-primary-400: #3377C3;*/
+    --color-primary-300: #91d3ff;
+    --color-primary-400: #53a5dc;
     /*--color-primary-500: #285296;*/
     /*--color-primary-600: #1F4178;*/
     /*--color-primary-700: #17315A;*/
@@ -72,6 +72,14 @@
 }
 
 @layer components {
+    .site-h2 {
+        font-family: stolzl, Helvetica, Arial, sans-serif;
+        font-size: clamp(2.2rem, 1.9631578947rem + 0.6315789474vw, 3.1rem);
+        font-weight: 300;
+        line-height: 1;
+        color: var(--color-primary-800);
+    }
+
     .pagination_item {
         @apply px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors duration-200;
     }

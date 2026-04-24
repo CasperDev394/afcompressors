@@ -53,15 +53,25 @@
                         <div class="site-header__menu-main">
                             <div class="site-header__menu-top">
                                 <div class="site-header__menu-top-left">
-                                    <a
-                                        v-for="item in featuredMenuItems"
-                                        :key="item.label"
-                                        :href="item.href"
-                                        class="site-header__menu-link"
-                                        @click="closeMenu"
-                                    >
-                                        {{ item.label }}
-                                    </a>
+                                    <div class="site-header__featured-group">
+                                        <a
+                                            v-for="item in featuredMenuItems"
+                                            :key="item.label"
+                                            :href="item.href"
+                                            class="site-header__menu-link"
+                                            :class="item.className"
+                                            @click="closeMenu"
+                                        >
+                                            <span
+                                                v-if="item.eyebrow"
+                                                class="site-header__featured-eyebrow"
+                                                :class="item.eyebrowClass"
+                                            >
+                                                {{ item.eyebrow }}
+                                            </span>
+                                            <span>{{ item.label }}</span>
+                                        </a>
+                                    </div>
                                 </div>
 
                                 <nav class="site-header__menu-top-right" aria-label="Основное меню">
@@ -165,12 +175,35 @@ defineProps({
 const isMenuOpen = ref(false);
 
 const featuredMenuItems = [
-    { label: 'Безмасляные поршневые компрессоры', href: '#' },
+    {
+        label: 'Безмасляные поршневые компрессоры',
+        href: '#',
+        className: 'site-header__menu-link--primary',
+    },
+    {
+        label: 'Oil free PET compressors',
+        href: '#',
+        eyebrow: '15 - 40 bar',
+        eyebrowClass: 'site-header__featured-eyebrow--secondary',
+        className: 'site-header__menu-link--subitem',
+    },
+    {
+        label: 'Oil free compressors',
+        href: '#',
+        eyebrow: '8 & 10 bar',
+        eyebrowClass: 'site-header__featured-eyebrow--primary',
+        className: 'site-header__menu-link--subitem site-header__menu-link--subitem-blue',
+    },
+    {
+        label: 'Intermediate pressures',
+        href: '#',
+        className: 'site-header__menu-link--subitem',
+    },
 ];
 
 const secondaryMenuItems = [
-    { label: 'Новости и события', href: '#' },
-    { label: 'Контакты', href: '#' },
+    { label: 'News & Events', href: '#' },
+    { label: 'Contact', href: '/contact' },
 ];
 
 const menuSections = [
@@ -379,6 +412,13 @@ onBeforeUnmount(() => {
     padding-right: 36px;
 }
 
+.site-header__featured-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+}
+
 .site-header__menu-top-right {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -394,22 +434,65 @@ onBeforeUnmount(() => {
 }
 
 .site-header__menu-link {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
     width: fit-content;
     color: var(--color-white);
-    font-size: clamp(1.5rem, 1.15rem + 1vw, 2.25rem);
+    font-size: 21px;
     line-height: 1;
     transition: color 0.25s ease;
+}
+
+.site-header__menu-link--primary {
+    margin-bottom: 6px;
+}
+
+.site-header__menu-link--subitem {
+    position: relative;
+    gap: 2px;
+    padding-left: 44px;
+}
+
+.site-header__menu-link--subitem::before {
+    content: "";
+    position: absolute;
+    top: 0.95em;
+    left: 0;
+    width: 2rem;
+    height: 0.1rem;
+    background: #fff;
+    opacity: 0.2;
 }
 
 .site-header__menu-link:hover {
     color: var(--color-secondary-500);
 }
 
+.site-header__menu-link--subitem-blue:hover {
+    color: var(--color-primary-300);
+}
+
+.site-header__featured-eyebrow {
+    font-family: stolzl, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.site-header__featured-eyebrow--secondary {
+    color: var(--color-secondary-500);
+}
+
+.site-header__featured-eyebrow--primary {
+    color: var(--color-primary-400);
+}
+
 .site-header__menu-heading {
     margin-bottom: 0;
     color: var(--color-white);
     font-family: stolzl, Helvetica, Arial, sans-serif;
-    font-size: 1.4rem;
+    font-size: 21px;
     font-weight: 600;
     line-height: 1;
     text-decoration: none;
@@ -461,7 +544,7 @@ onBeforeUnmount(() => {
     color: var(--color-white);
     opacity: 0.6;
     font-family: stolzl, Times, "Times New Roman", serif;
-    font-size: 1.3rem;
+    font-size: 21px;
     font-weight: 300;
     line-height: 1.1;
     text-decoration: none;
@@ -471,7 +554,7 @@ onBeforeUnmount(() => {
 }
 
 .secondary-menu--footer {
-    font-size: clamp(1.5rem, 1.4210526316rem + 0.2105263158vw, 1.8rem);
+    font-size: 21px;
     text-transform: uppercase;
 }
 
@@ -548,7 +631,7 @@ onBeforeUnmount(() => {
     justify-content: center;
     gap: 4px;
     font-family: stolzl, Times, "Times New Roman", serif;
-    font-size: 1.3rem;
+    font-size: 21px;
     font-weight: 300;
     line-height: 1.1;
     text-transform: uppercase;
@@ -630,6 +713,10 @@ onBeforeUnmount(() => {
 
     .site-header__menu-top-left {
         padding-right: 0;
+    }
+
+    .site-header__featured-group {
+        gap: 16px;
     }
 
     .site-header__menu-top-right {

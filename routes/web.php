@@ -6,6 +6,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/', [HomeController::class, 'getBlade'])->name('home');
+Route::get('/contact', [HomeController::class, 'getContactBlade'])->name('contact');
+Route::post('/contact/general', [HomeController::class, 'submitGeneralContact'])->name('contact.general.submit');
+Route::post('/contact/quote-request', [HomeController::class, 'submitQuoteRequest'])->name('contact.quote.submit');
 
 Route::view('login', 'auth.login')->name('login');
 Route::post('login',  [LoginController::class, 'login']);
