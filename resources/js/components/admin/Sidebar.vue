@@ -37,15 +37,8 @@ import { onMounted, ref } from "vue";
 import {
     faAnglesLeft,
     faAnglesRight,
-    faCity,
-    faClipboardList,
-    faComments,
-    faEarthEurope,
     faGaugeHigh,
     faLandmark,
-    faMapLocationDot,
-    faTags,
-    faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
 
 const badges = ref({
@@ -56,8 +49,8 @@ const isCollapsed = ref(false);
 const storageKey = 'admin-sidebar-collapsed';
 
 const menuItems = [
-    { key: 'info', href: '/admin/info', label: 'Dashboard', icon: faGaugeHigh },
-    { key: 'compressors', href: '/admin/compressors', label: 'Компрессоры', icon: faUserTie },
+    { key: 'info', href: '/admin/info', label: 'Dashboard', icon: faLandmark },
+    { key: 'compressors', href: '/admin/compressors', label: 'Компрессоры', icon: faGaugeHigh },
 ];
 
 const currentUrl = () => {
