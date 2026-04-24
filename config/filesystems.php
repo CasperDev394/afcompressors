@@ -47,6 +47,13 @@ return [
             'report' => false,
         ],
 
+        'storagePublic' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/storage.public'),
+            'url' => env('APP_URL').'/storage.public',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -75,6 +82,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('storage.public') => storage_path('app/public/storage.public'),
     ],
 
 ];

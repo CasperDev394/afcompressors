@@ -1,0 +1,107 @@
+
+:root {
+    --admin-sidebar-width: 235px;
+    --admin-sidebar-offset: 255px;
+    --admin-header-height: 64px;
+}
+
+body.admin-sidebar-collapsed {
+    --admin-sidebar-width: 84px;
+    --admin-sidebar-offset: 104px;
+}
+
+html,
+body.admin-body,
+.admin-app {
+    min-height: 100%;
+    background: var(--color-zinc-950);
+}
+
+.admin-main {
+    min-height: 100dvh;
+    overflow-x: auto;
+    overflow-y: visible;
+    background: var(--color-zinc-900);
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.pl-65 {
+    min-width: max-content;
+    padding-left: var(--admin-sidebar-offset) !important;
+    padding-right: 16px;
+    transition: padding-left 0.2s ease;
+}
+
+.admin-bottom-bar {
+    padding-left: var(--admin-sidebar-offset) !important;
+    transition: padding-left 0.2s ease;
+}
+
+.app-table{
+    margin-top: 16px;
+    min-width: max-content;
+
+    & div.vue3-easy-data-table__main{
+        min-height: 80vh;
+        overflow-x: auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    & .vue3-easy-data-table__body{
+        & tr{
+            cursor: pointer;
+        }
+    }
+    & .vue3-easy-data-table__header{
+
+    }
+
+    .row-sub-separator{
+        margin: 0;
+        width: 300px;
+        color: gray;
+    }
+}
+
+.customize-table{
+    --easy-table-header-font-color: #fff;
+    --easy-table-header-background-color: #242627;
+
+    --easy-table-header-item-padding: 5px;
+
+    --easy-table-border: none;
+
+    --easy-table-body-row-background-color: #2e3032;
+
+    --easy-table-body-row-font-color: #fff;
+    --easy-table-body-row-height: 46px;
+    --easy-table-row-border: 1px solid #7a808b;
+    --easy-table-body-row-hover-background-color: rgb(255 255 255 / 5%);
+    --easy-table-body-row-hover-font-color: #fff;
+
+    border-radius: 10px;
+
+    .vue3-easy-data-table__main{
+        border-radius: 10px;
+    }
+}
+
+.admin-form-shell {
+    min-width: max-content;
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    :root {
+        --admin-header-height: 52px;
+    }
+
+    .pl-65 {
+        padding-top: 64px !important;
+        padding-bottom: 72px !important;
+    }
+
+    .admin-bottom-bar {
+        height: 48px !important;
+    }
+}

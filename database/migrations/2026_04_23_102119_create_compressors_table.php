@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('name_slug')->unique();
+            $table->string('pressure_category')->nullable();
 
             $table->boolean('published')->default(true);
-            $table->string('motor_power')->nullable();
-            $table->string('fad')->nullable();
-            $table->string('nominal_capacity')->nullable();
             $table->string('msf')->nullable();
             $table->string('capacities_iso')->nullable();
 

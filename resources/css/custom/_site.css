@@ -1,0 +1,24 @@
+
+.mob_navbar__action {
+
+    svg {
+        transition: opacity 0.5s ease;
+    }
+
+    .icon-close {
+        opacity: 0;
+    }
+
+    &.menu-open {
+        .icon-bars {
+            opacity: 0;
+        }
+        .icon-close {
+            opacity: 1;
+        }
+    }
+}
+
+.bg-clip-text{
+    -webkit-background-clip: text;
+}
