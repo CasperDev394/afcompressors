@@ -4,11 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttachmentsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Models\Option;
 
 Route::get('/', [HomeController::class, 'getBlade'])->name('home');
 Route::get('/contact', [HomeController::class, 'getContactBlade'])->name('contact');
 Route::post('/contact/general', [HomeController::class, 'submitGeneralContact'])->name('contact.general.submit');
 Route::post('/contact/quote-request', [HomeController::class, 'submitQuoteRequest'])->name('contact.quote.submit');
+Route::get('/options/{option:name_slug}', [HomeController::class, 'getOptionBlade'])->name('options.show');
+Route::get('/options/{option:name_slug}/data', [HomeController::class, 'readOption'])->name('options.read');
 
 Route::view('login', 'auth.login')->name('login');
 Route::post('login',  [LoginController::class, 'login']);

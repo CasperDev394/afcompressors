@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('option_posts', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('name_slug')->unique();
+            $table->text('description')->nullable();
+            $table->unsignedBigInteger('option_id')->nullable();
+            $table->boolean('published')->default(true);
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('option_posts');
+    }
+};

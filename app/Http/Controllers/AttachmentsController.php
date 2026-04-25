@@ -11,15 +11,32 @@ class AttachmentsController extends Controller
 {
     public function uploadFile(Request $request): JsonResponse
     {
-        $request->validate([
-            'file' => ['required', 'image', 'max:10240'],
-            'attachmentableType' => ['required', 'string'],
-        ]);
-
         $attachmentableType = strtoupper((string) $request->input('attachmentableType'));
+        $rules = [
+            'attachmentableType' => ['required', 'string'],
+        ];
+
+        if ($attachmentableType === 'OPTION_ICON') {
+            $rules['file'] = [
+                'required',
+                'file',
+                'max:10240',
+                function ($attribute, $value, $fail) {
+                    /** @var UploadedFile $value */
+                    if (strtolower((string) $value->getClientOriginalExtension()) !== 'svg') {
+                        $fail('The '.$attribute.' field must be an SVG file.');
+                    }
+                },
+            ];
+        } else {
+            $rules['file'] = ['required', 'image', 'max:10240'];
+        }
+
+        $request->validate($rules);
 
         $dir = match ($attachmentableType) {
             'COMPRESSOR' => 'compressors/' . date('Y/m'),
+            'OPTION_ICON' => 'options/icons/' . date('Y/m'),
             default => 'uploads/' . date('Y/m'),
         };
 

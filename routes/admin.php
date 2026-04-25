@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\CompressorsController;
+use App\Http\Controllers\Admin\OptionsController;
+use App\Http\Controllers\Admin\OptionPostsController;
 use App\Http\Controllers\Admin\SidebarController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +25,20 @@ Route::prefix('compressors')->group(function () {
     Route::post('{compressor:name_slug}/delete', [CompressorsController::class, 'delete']);
 
     Route::view('{compressor:name_slug}', 'admin.compressors.item');
+});
+
+Route::prefix('options')->group(function () {
+    Route::view('/', 'admin.options.list');
+    Route::get('/getList', [OptionsController::class, 'getList']);
+
+    Route::view('create', 'admin.options.item');
+    Route::post('create', [OptionsController::class, 'create']);
+    Route::get('{option:name_slug}/read', [OptionsController::class, 'read']);
+    Route::post('{option:name_slug}/update', [OptionsController::class, 'update']);
+    Route::post('{option:name_slug}/delete', [OptionsController::class, 'delete']);
+    Route::post('{option:name_slug}/posts/create', [OptionPostsController::class, 'create']);
+    Route::post('{option:name_slug}/posts/{post:name_slug}/update', [OptionPostsController::class, 'update']);
+    Route::post('{option:name_slug}/posts/{post:name_slug}/delete', [OptionPostsController::class, 'delete']);
+
+    Route::view('{option:name_slug}', 'admin.options.item');
 });

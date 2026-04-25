@@ -41,7 +41,14 @@ defineProps({
                     >
                         {{ item.label }}
                     </a>
-                    <span v-else class="breadcrumbs__link breadcrumbs__link--current" aria-current="page">
+                    <span
+                        v-else-if="item.current"
+                        class="breadcrumbs__link breadcrumbs__link--current"
+                        aria-current="page"
+                    >
+                        {{ item.label }}
+                    </span>
+                    <span v-else class="breadcrumbs__link">
                         {{ item.label }}
                     </span>
                 </li>

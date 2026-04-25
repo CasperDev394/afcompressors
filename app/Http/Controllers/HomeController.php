@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Option;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -28,6 +30,55 @@ class HomeController extends Controller
         return view('contact');
     }
 
+    public function getOptionBlade(Option $option): View
+    {
+        $this->abortIfOptionUnavailable($option);
+
+        return view('option', [
+            'title' => $option->name . ' | AF compressors',
+            'description' => $option->name,
+            'option' => $option,
+        ]);
+    }
+
+    public function readOption(Option $option): JsonResponse
+    {
+        $this->abortIfOptionUnavailable($option);
+
+        $option->load([
+            'iconAttachment',
+            'posts' => fn ($query) => $query->where('published', true)->orderBy('id'),
+            'posts.attachments',
+        ]);
+
+        return response()->json([
+            'data' => [
+                'id' => $option->id,
+                'name' => $option->name,
+                'name_slug' => $option->name_slug,
+                'icon_attachment' => $option->iconAttachment ? [
+                    'id' => $option->iconAttachment->id,
+                    'url' => $option->iconAttachment->url,
+                    'title' => $option->iconAttachment->title,
+                ] : null,
+                'posts' => $option->posts->map(function ($post) {
+                    return [
+                        'id' => $post->id,
+                        'name' => $post->name,
+                        'description' => $post->description,
+                        'image' => optional($post->attachments->first(), function ($attachment) {
+                            return [
+                                'id' => $attachment->id,
+                                'url' => $attachment->url,
+                                'title' => $attachment->title,
+                            ];
+                        }),
+                    ];
+                })->values(),
+            ],
+        ]);
+    }
+
     public function submitGeneralContact(Request $request): JsonResponse
     {
         // TODO: implement general contacts form submission.
@@ -38,5 +89,12 @@ class HomeController extends Controller
     {
         // TODO: implement quote request form submission.
         return response()->json(['status' => 'todo'], 202);
+    }
+
+    protected function abortIfOptionUnavailable(Option $option): void
+    {
+        if (!$option->published) {
+            throw new NotFoundHttpException();
+        }
     }
 }

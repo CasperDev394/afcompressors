@@ -39,6 +39,7 @@ import {
     faAnglesRight,
     faGaugeHigh,
     faLandmark,
+    faSliders,
 } from "@fortawesome/free-solid-svg-icons";
 
 const badges = ref({
@@ -51,6 +52,7 @@ const storageKey = 'admin-sidebar-collapsed';
 const menuItems = [
     { key: 'info', href: '/admin/info', label: 'Dashboard', icon: faLandmark },
     { key: 'compressors', href: '/admin/compressors', label: 'Компрессоры', icon: faGaugeHigh },
+    { key: 'options', href: '/admin/options', label: 'Опции', icon: faSliders },
 ];
 
 const currentUrl = () => {

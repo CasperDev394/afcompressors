@@ -202,8 +202,8 @@ const featuredMenuItems = [
 ];
 
 const secondaryMenuItems = [
-    { label: 'News & Events', href: '#' },
-    { label: 'Contact', href: '/contact' },
+    { label: 'Новости и события', href: '#' },
+    { label: 'Контакты', href: '/contact' },
 ];
 
 const menuSections = [
