@@ -26,12 +26,14 @@ class OptionsController extends Controller
         $validated = Validator::make($request->all(), [
             'name' => ['required', 'string'],
             'published' => ['nullable', 'boolean'],
+            'eco' => ['nullable', 'boolean'],
             'icon_attachment_id' => ['nullable', 'integer'],
             'attachment_ids' => ['nullable', 'array'],
             'attachment_ids.*' => ['integer'],
         ])->validate();
 
         $validated['published'] = (bool) ($validated['published'] ?? false);
+        $validated['eco'] = (bool) ($validated['eco'] ?? false);
 
         (new OptionService())->create($validated);
 
@@ -50,12 +52,14 @@ class OptionsController extends Controller
         $validated = Validator::make($request->all(), [
             'name' => ['required', 'string'],
             'published' => ['nullable', 'boolean'],
+            'eco' => ['nullable', 'boolean'],
             'icon_attachment_id' => ['nullable', 'integer'],
             'attachment_ids' => ['nullable', 'array'],
             'attachment_ids.*' => ['integer'],
         ])->validate();
 
         $validated['published'] = (bool) ($validated['published'] ?? false);
+        $validated['eco'] = (bool) ($validated['eco'] ?? false);
 
         (new OptionService($option))->update($validated);
 

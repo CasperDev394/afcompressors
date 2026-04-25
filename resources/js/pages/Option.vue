@@ -18,7 +18,7 @@ const isLoaded = ref(false);
 
 const breadcrumbItems = computed(() => [
     { label: 'Технология AF' },
-    { label: 'Опции' },
+    { label: 'Опции', href: '/options' },
     { label: option.value.name, current: true },
 ]);
 

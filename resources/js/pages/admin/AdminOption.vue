@@ -23,6 +23,15 @@
                             <span>Опубликовано</span>
                         </label>
 
+                        <label class="inline-flex items-center gap-3 cursor-pointer">
+                            <input
+                                v-model="option.eco"
+                                type="checkbox"
+                                class="h-4 w-4 rounded border border-white/20 bg-white/5"
+                            />
+                            <span>Eco</span>
+                        </label>
+
                         <div class="w-full rounded-xl border border-white/10 bg-white/5 p-4">
                             <div class="flex items-center justify-between gap-4 mb-4">
                                 <div>
@@ -261,6 +270,7 @@ const option = ref({
     id: null,
     name: null,
     published: true,
+    eco: false,
     iconAttachment: null,
 })
 
@@ -284,6 +294,7 @@ const applyOptionFromResponse = (data) => {
         id: data.id,
         name: data.name,
         published: !!data.published,
+        eco: !!data.eco,
         iconAttachment: data.icon_attachment || null,
     }
 
@@ -309,6 +320,7 @@ const submit = () => {
         id: option.value.id,
         name: option.value.name,
         published: option.value.published ? 1 : 0,
+        eco: option.value.eco ? 1 : 0,
         icon_attachment_id: option.value.iconAttachment?.id || null,
         attachment_ids: attachments.value.map((attachment) => attachment.id),
     }

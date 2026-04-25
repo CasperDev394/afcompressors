@@ -30,6 +30,14 @@ class HomeController extends Controller
         return view('contact');
     }
 
+    public function getOptionsBlade(): View
+    {
+        return view('options', [
+            'title' => 'Опции | AF compressors',
+            'description' => 'Опции AF compressors',
+        ]);
+    }
+
     public function getOptionBlade(Option $option): View
     {
         $this->abortIfOptionUnavailable($option);
@@ -38,6 +46,31 @@ class HomeController extends Controller
             'title' => $option->name . ' | AF compressors',
             'description' => $option->name,
             'option' => $option,
+        ]);
+    }
+
+    public function readOptions(): JsonResponse
+    {
+        $options = Option::query()
+            ->where('published', true)
+            ->orderBy('name')
+            ->with('iconAttachment')
+            ->get();
+
+        return response()->json([
+            'data' => $options->map(function (Option $option) {
+                return [
+                    'id' => $option->id,
+                    'name' => $option->name,
+                    'name_slug' => $option->name_slug,
+                    'eco' => (bool) $option->eco,
+                    'icon_attachment' => $option->iconAttachment ? [
+                        'id' => $option->iconAttachment->id,
+                        'url' => $option->iconAttachment->url,
+                        'title' => $option->iconAttachment->title,
+                    ] : null,
+                ];
+            })->values(),
         ]);
     }
 

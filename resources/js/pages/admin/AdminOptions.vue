@@ -37,6 +37,12 @@
                     </span>
                 </template>
 
+                <template #item-eco="item">
+                    <span :class="item.eco ? 'text-emerald-500' : 'text-gray-400'">
+                        {{ item.eco ? 'Да' : 'Нет' }}
+                    </span>
+                </template>
+
                 <template #loading>
                     <img
                         src="https://i.pinimg.com/originals/94/fd/2b/94fd2bf50097ade743220761f41693d5.gif"
@@ -60,6 +66,7 @@ const options = ref([])
 const loading = ref(true)
 const headers = ref([
     { text: "Название", value: "name" },
+    { text: "Эко", value: "eco" },
     { text: "Опубликовано", value: "published" },
 ]);
 

@@ -13,6 +13,7 @@ class OptionResource extends JsonResource
             'name' => $this->resource->name,
             'name_slug' => $this->resource->name_slug,
             'published' => (bool) $this->resource->published,
+            'eco' => (bool) $this->resource->eco,
             'icon_attachment' => $this->whenLoaded('iconAttachment', function () {
                 if (!$this->resource->iconAttachment) {
                     return null;

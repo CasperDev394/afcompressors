@@ -17,6 +17,7 @@ class Option extends Model
         'name',
         'name_slug',
         'published',
+        'eco',
         'icon_attachment_id',
     ];
 
