@@ -125,16 +125,16 @@ const goBack = () => {
 
 <style scoped>
 .option-page__hero {
-    min-height: 490px;
+    min-height: 400px;
     background: var(--color-primary-800);
 }
 
 .option-page__hero-inner {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 48px;
-    min-height: 490px;
+    min-height: 400px;
     padding: 48px 0 56px;
 }
 
