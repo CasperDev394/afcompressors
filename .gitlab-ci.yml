@@ -18,7 +18,7 @@ build:
     - docker push "$IMAGE_TAG"
     - docker push "$IMAGE_LATEST"
   only:
-    - master
+    - main
 
 deploy:
   stage: deploy
@@ -44,4 +44,4 @@ deploy:
         docker compose exec -T app php artisan storage:link
       "
   only:
-    - master
+    - main
