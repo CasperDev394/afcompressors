@@ -12,6 +12,7 @@ import OptionsPage from './pages/Options.vue';
 import AFTechnologyPage from './pages/AFTechnology.vue';
 import SolutionsPage from './pages/Solutions.vue';
 import SolutionsCategoryPage from './pages/SolutionsCategory.vue';
+import SolutionsCompressorPage from './pages/SolutionsCompressor.vue';
 
 import AdminHeader from './components/admin/Header.vue';
 import AdminSidebar from './components/admin/Sidebar.vue';
@@ -25,6 +26,7 @@ import AttachmentGallery from './components/core/AttachmentGallery.vue';
 import Breadcrumbs from './components/core/Breadcrumbs.vue';
 import HeaderApp from './components/core/Header.vue';
 import FooterApp from './components/core/Footer.vue';
+import HomeExpectationsCarousel from './components/core/HomeExpectationsCarousel.vue';
 import OptionsGridBlock from './components/core/OptionsGridBlock.vue';
 import OptionsNewsletterSection from './components/core/OptionsNewsletterSection.vue';
 import SiteHero from './components/core/SiteHero.vue';
@@ -49,6 +51,7 @@ app
     .component('AFTechnologyPage', AFTechnologyPage)
     .component('SolutionsPage', SolutionsPage)
     .component('SolutionsCategoryPage', SolutionsCategoryPage)
+    .component('SolutionsCompressorPage', SolutionsCompressorPage)
 
     .component('AdminHeader', AdminHeader)
     .component('AdminSidebar', AdminSidebar)
@@ -62,6 +65,7 @@ app
     .component('Breadcrumbs', Breadcrumbs)
     .component('HeaderApp', HeaderApp)
     .component('FooterApp', FooterApp)
+    .component('HomeExpectationsCarousel', HomeExpectationsCarousel)
     .component('OptionsGridBlock', OptionsGridBlock)
     .component('OptionsNewsletterSection', OptionsNewsletterSection)
     .component('SiteHero', SiteHero)

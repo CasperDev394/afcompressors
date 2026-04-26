@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compressor;
+use App\Models\CompressorModel;
 use App\Models\Option;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -91,6 +92,75 @@ class HomeController extends Controller
                             'id' => $image->id,
                             'url' => $image->url,
                             'title' => $image->title,
+                        ] : null,
+                    ];
+                })->values(),
+            ],
+        ]);
+    }
+
+    public function getSolutionsCompressorBlade(string $category, Compressor $compressor): View
+    {
+        $config = $this->getSolutionsCategoryConfig($category);
+        $this->abortIfCompressorUnavailable($compressor, $category);
+
+        return view('solutions-compressor', [
+            'title' => $compressor->name . ' | AF compressors',
+            'description' => $config['meta_title'] . ' ' . $compressor->name,
+            'category' => $category,
+            'compressor' => $compressor,
+        ]);
+    }
+
+    public function readSolutionsCompressor(string $category, Compressor $compressor): JsonResponse
+    {
+        $this->getSolutionsCategoryConfig($category);
+        $this->abortIfCompressorUnavailable($compressor, $category);
+
+        $compressor->load(['attachments', 'models']);
+
+        $image = $compressor->attachments->first();
+
+        $options = Option::query()
+            ->where('published', true)
+            ->orderBy('name')
+            ->with('iconAttachment')
+            ->get();
+
+        return response()->json([
+            'data' => [
+                'compressor' => [
+                    'id' => $compressor->id,
+                    'name' => $compressor->name,
+                    'name_slug' => $compressor->name_slug,
+                    'msf' => $compressor->msf,
+                    'capacities_iso' => $compressor->capacities_iso,
+                    'image' => $image ? [
+                        'id' => $image->id,
+                        'url' => $image->url,
+                        'title' => $image->title,
+                    ] : null,
+                ],
+                'models' => $compressor->models->map(function (CompressorModel $model) {
+                    return [
+                        'id' => $model->id,
+                        'name' => $model->name,
+                        'capacity' => $model->capacity !== null ? (float) $model->capacity : null,
+                        'FAD' => $model->FAD,
+                        'CFM' => $model->CFM,
+                        'installed_power' => $model->installed_power,
+                    ];
+                })->values(),
+                'options' => $options->map(function (Option $option) {
+                    return [
+                        'id' => $option->id,
+                        'name' => $option->name,
+                        'name_slug' => $option->name_slug,
+                        'eco' => (bool) $option->eco,
+                        'icon_attachment' => $option->iconAttachment ? [
+                            'id' => $option->iconAttachment->id,
+                            'url' => $option->iconAttachment->url,
+                            'title' => $option->iconAttachment->title,
                         ] : null,
                     ];
                 })->values(),
@@ -187,6 +257,13 @@ class HomeController extends Controller
     protected function abortIfOptionUnavailable(Option $option): void
     {
         if (!$option->published) {
+            throw new NotFoundHttpException();
+        }
+    }
+
+    protected function abortIfCompressorUnavailable(Compressor $compressor, string $category): void
+    {
+        if (!$compressor->published || $compressor->pressure_category !== $category) {
             throw new NotFoundHttpException();
         }
     }

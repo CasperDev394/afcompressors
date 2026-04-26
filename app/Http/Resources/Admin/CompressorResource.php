@@ -14,6 +14,11 @@ class CompressorResource extends JsonResource
             'name' => $this->resource->name,
             'name_slug' => $this->resource->name_slug,
             'pressure_category' => $this->resource->pressure_category,
+            'msf' => $this->resource->msf,
+            'capacities_iso' => $this->resource->capacities_iso,
+            'models' => $this->whenLoaded('models', function () use ($request) {
+                return CompressorModelResource::collection($this->resource->models)->resolve($request);
+            }),
 
             'attachments' => $this->whenLoaded('attachments', function () {
                 return $this->resource->attachments->map(function ($attachment) {

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\Attachable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Compressor extends Model
 {
@@ -18,4 +19,8 @@ class Compressor extends Model
         'capacities_iso',
     ];
 
+    public function models(): HasMany
+    {
+        return $this->hasMany(CompressorModel::class, 'compressor_id')->orderBy('name');
+    }
 }

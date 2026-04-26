@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { computed, nextTick, onMounted, reactive, ref } from 'vue';
 
 const breadcrumbItems = [
     { label: 'Контакты', current: true },
@@ -9,6 +9,7 @@ const generalSubmitUrl = '/contact/general';
 const quoteSubmitUrl = '/contact/quote-request';
 
 const activeTab = ref('general');
+const tabsSection = ref(null);
 
 const tabs = {
     general: {
@@ -76,6 +77,18 @@ const setActiveTab = (tabKey) => {
     activeTab.value = tabKey;
 };
 
+const syncTabFromQuery = async () => {
+    const tab = new URLSearchParams(window.location.search).get('tab');
+
+    if (tab !== 'quote') {
+        return;
+    }
+
+    activeTab.value = 'quote';
+    await nextTick();
+    tabsSection.value?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
 const submitGeneralContacts = () => {
     // TODO: wire general contacts form submission to /contact/general.
     console.info('TODO submit general contacts', generalForm);
@@ -94,6 +107,10 @@ const handleSubmit = () => {
 
     submitQuoteRequest();
 };
+
+onMounted(() => {
+    syncTabFromQuery();
+});
 </script>
 
 <template>
@@ -114,7 +131,7 @@ const handleSubmit = () => {
             </div>
         </section>
 
-        <section class="contact-page__section">
+        <section ref="tabsSection" class="contact-page__section">
             <div class="container mx-auto px-4">
                 <div class="contact-page__section-head">
                     <h2 class="site-h2">Выберите свое контактное лицо</h2>

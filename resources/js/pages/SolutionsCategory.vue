@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
+import { solutionCategories } from '../data/solutionCategories';
 
 const props = defineProps({
     categorySlug: {
@@ -8,40 +9,9 @@ const props = defineProps({
     },
 });
 
-const categoryMap = {
-    '15-40-bar': {
-        breadcrumb: '15 – 40 бар',
-        accentTitle: '15 – 40 бар',
-        accentClass: 'solutions-category-page__title-accent--secondary',
-        title: 'Безмасляные компрессоры для ПЭТ',
-        lead: 'Безмасляный компрессор для ПЭТ с давлением 15-40 бар',
-        description: 'представляет собой высокоэффективный 3-ступенчатый поршневой воздушный компрессор с водяным охлаждением, состоящий из 3 цилиндров, установленный на опорной плите, оснащенной антивибрационными опорами, и включает в себя:',
-        bullets: [
-            'Электродвигатель с коэффициентом запаса прочности 1,0 и клиноременной передачей.',
-            'Промежуточные охладители между каждой ступенью и доохладитель.',
-            'Ресивер высокого давления из горячеоцинкованной стали',
-        ],
-        detailsLabel: 'подробнее',
-    },
-    '8-10-bar': {
-        breadcrumb: '8 и 10 бар',
-        accentTitle: '8 и 10 бар',
-        accentClass: 'solutions-category-page__title-accent--primary',
-        title: 'Безмасляные компрессоры',
-        lead: 'Безмасляные компрессоры с давлением 8 и 10 бар',
-        description: 'представляют собой высокоэффективные двухступенчатые поршневые воздушные компрессоры с водяным охлаждением, двухцилиндровые, установленные на опорной плите, оснащенной антивибрационными опорами, и включают в себя:',
-        bullets: [
-            'Электродвигатель с коэффициентом запаса прочности 1,0 и клиноременной передачей.',
-            'Промежуточные охладители между каждой ступенью и доохладитель.',
-            'Ресивер низкого давления из горячеоцинкованной стали',
-        ],
-        detailsLabel: 'подробнее',
-    },
-};
-
 const compressors = ref([]);
 const isLoaded = ref(false);
-const category = computed(() => categoryMap[props.categorySlug]);
+const category = computed(() => solutionCategories[props.categorySlug]);
 
 const breadcrumbItems = computed(() => [
     { label: 'решения', href: '/solutions' },

@@ -26,6 +26,8 @@ class CompressorsController extends Controller
         $validated = Validator::make($request->all(), [
             'name' => ['required', 'string'],
             'pressure_category' => ['nullable', 'in:15-40-bar,8-10-bar'],
+            'msf' => ['nullable', 'string'],
+            'capacities_iso' => ['nullable', 'string'],
             'attachment_ids' => ['nullable', 'array'],
             'attachment_ids.*' => ['integer'],
         ])->validate();
@@ -36,7 +38,7 @@ class CompressorsController extends Controller
 
     public function read(Compressor $compressor): CompressorResource
     {
-        $compressor->load(['attachments']);
+        $compressor->load(['attachments', 'models']);
         return new CompressorResource($compressor);
     }
 
@@ -45,6 +47,8 @@ class CompressorsController extends Controller
         $validated = Validator::make($request->all(), [
             'name' => ['required', 'string'],
             'pressure_category' => ['nullable', 'in:15-40-bar,8-10-bar'],
+            'msf' => ['nullable', 'string'],
+            'capacities_iso' => ['nullable', 'string'],
             'attachment_ids' => ['nullable', 'array'],
             'attachment_ids.*' => ['integer'],
         ])->validate();

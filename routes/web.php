@@ -13,6 +13,8 @@ Route::get('/af-technology', [HomeController::class, 'getAfTechnologyBlade'])->n
 Route::get('/solutions', [HomeController::class, 'getSolutionsBlade'])->name('solutions.index');
 Route::get('/solutions/{category}', [HomeController::class, 'getSolutionsCategoryBlade'])->name('solutions.category');
 Route::get('/solutions/{category}/data', [HomeController::class, 'readSolutionsCategory'])->name('solutions.category.read');
+Route::get('/solutions/{category}/{compressor:name_slug}/data', [HomeController::class, 'readSolutionsCompressor'])->name('solutions.compressor.read');
+Route::get('/solutions/{category}/{compressor:name_slug}', [HomeController::class, 'getSolutionsCompressorBlade'])->name('solutions.compressor');
 Route::get('/options', [HomeController::class, 'getOptionsBlade'])->name('options.index');
 Route::get('/options/data', [HomeController::class, 'readOptions'])->name('options.index.read');
 Route::get('/options/{option:name_slug}', [HomeController::class, 'getOptionBlade'])->name('options.show');

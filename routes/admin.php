@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CompressorModelsController;
 use App\Http\Controllers\Admin\CompressorsController;
 use App\Http\Controllers\Admin\OptionsController;
 use App\Http\Controllers\Admin\OptionPostsController;
@@ -23,6 +24,9 @@ Route::prefix('compressors')->group(function () {
     Route::get('{compressor:name_slug}/read', [CompressorsController::class, 'read']);
     Route::post('{compressor:name_slug}/update', [CompressorsController::class, 'update']);
     Route::post('{compressor:name_slug}/delete', [CompressorsController::class, 'delete']);
+    Route::post('{compressor:name_slug}/models/create', [CompressorModelsController::class, 'create']);
+    Route::post('{compressor:name_slug}/models/{model}/update', [CompressorModelsController::class, 'update']);
+    Route::post('{compressor:name_slug}/models/{model}/delete', [CompressorModelsController::class, 'delete']);
 
     Route::view('{compressor:name_slug}', 'admin.compressors.item');
 });
