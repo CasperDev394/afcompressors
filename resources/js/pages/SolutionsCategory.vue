@@ -125,10 +125,6 @@ axios.get(`/solutions/${props.categorySlug}/data`)
     padding: 48px 0 96px;
 }
 
-.solutions-category-page__envelope-wrap {
-    //background: var(--color-white);
-}
-
 .solutions-category-page__envelope {
     position: relative;
     z-index: 2;
