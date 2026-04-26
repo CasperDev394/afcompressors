@@ -13,6 +13,7 @@ class CompressorResource extends JsonResource
             'id' => $this->resource->id,
             'name' => $this->resource->name,
             'name_slug' => $this->resource->name_slug,
+            'pressure_category' => $this->resource->pressure_category,
 
             'attachments' => $this->whenLoaded('attachments', function () {
                 return $this->resource->attachments->map(function ($attachment) {

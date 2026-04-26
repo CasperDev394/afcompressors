@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Compressor;
 use App\Models\Option;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -35,6 +36,65 @@ class HomeController extends Controller
         return view('options', [
             'title' => 'Опции | AF compressors',
             'description' => 'Опции AF compressors',
+        ]);
+    }
+
+    public function getAfTechnologyBlade(): View
+    {
+        return view('af-technology', [
+            'title' => 'Технология AF | AF compressors',
+            'description' => 'Технология AF compressors',
+        ]);
+    }
+
+    public function getSolutionsBlade(): View
+    {
+        return view('solutions', [
+            'title' => 'Безмасляные поршневые компрессоры | AF compressors',
+            'description' => 'Безмасляные поршневые компрессоры AF compressors',
+        ]);
+    }
+
+    public function getSolutionsCategoryBlade(string $category): View
+    {
+        $config = $this->getSolutionsCategoryConfig($category);
+
+        return view('solutions-category', [
+            'title' => $config['meta_title'] . ' | AF compressors',
+            'description' => $config['meta_title'],
+            'category' => $category,
+        ]);
+    }
+
+    public function readSolutionsCategory(string $category): JsonResponse
+    {
+        $this->getSolutionsCategoryConfig($category);
+
+        $compressors = Compressor::query()
+            ->where('published', true)
+            ->where('pressure_category', $category)
+            ->with('attachments')
+            ->orderBy('name')
+            ->get();
+
+        return response()->json([
+            'data' => [
+                'compressors' => $compressors->map(function (Compressor $compressor) use ($category) {
+                    $image = $compressor->attachments->first();
+
+                    return [
+                        'id' => $compressor->id,
+                        'name' => $compressor->name,
+                        'name_slug' => $compressor->name_slug,
+                        'href' => '/solutions/' . $category . '/' . $compressor->name_slug,
+                        'image' => $image ? [
+                            'id' => $image->id,
+                            'url' => $image->url,
+                            'title' => $image->title,
+                        ] : null,
+                    ];
+                })->values(),
+            ],
         ]);
     }
 
@@ -129,5 +189,23 @@ class HomeController extends Controller
         if (!$option->published) {
             throw new NotFoundHttpException();
         }
+    }
+
+    protected function getSolutionsCategoryConfig(string $category): array
+    {
+        $categories = [
+            '15-40-bar' => [
+                'meta_title' => '15 – 40 бар',
+            ],
+            '8-10-bar' => [
+                'meta_title' => '8 и 10 бар',
+            ],
+        ];
+
+        if (!isset($categories[$category])) {
+            throw new NotFoundHttpException();
+        }
+
+        return $categories[$category];
     }
 }

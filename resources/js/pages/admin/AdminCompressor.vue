@@ -13,6 +13,15 @@
                             placeholder="Название"
                             v-model="compressor.name"
                         />
+
+                        <select
+                            v-model="compressor.pressure_category"
+                            class="bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full text-white"
+                        >
+                            <option class="text-black" value="">Категория давления</option>
+                            <option class="text-black" value="15-40-bar">15 – 40 бар</option>
+                            <option class="text-black" value="8-10-bar">8 и 10 бар</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -87,12 +96,14 @@ const attachments = ref([])
 const compressor = ref({
     id: null,
     name: null,
+    pressure_category: '',
 })
 
 const applyCompressorFromResponse = (data) => {
     compressor.value = {
         id: data.id,
         name: data.name,
+        pressure_category: data.pressure_category || '',
     }
 
     attachments.value = data.attachments || []
@@ -108,6 +119,7 @@ const submit = () => {
     const payload = {
         id: compressor.value.id,
         name: compressor.value.name,
+        pressure_category: compressor.value.pressure_category || null,
         attachment_ids: attachments.value.map((attachment) => attachment.id),
     }
 

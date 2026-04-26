@@ -9,6 +9,9 @@ import Home from './pages/Home.vue';
 import ContactPage from './pages/Contact.vue';
 import OptionPage from './pages/Option.vue';
 import OptionsPage from './pages/Options.vue';
+import AFTechnologyPage from './pages/AFTechnology.vue';
+import SolutionsPage from './pages/Solutions.vue';
+import SolutionsCategoryPage from './pages/SolutionsCategory.vue';
 
 import AdminHeader from './components/admin/Header.vue';
 import AdminSidebar from './components/admin/Sidebar.vue';
@@ -23,6 +26,8 @@ import Breadcrumbs from './components/core/Breadcrumbs.vue';
 import HeaderApp from './components/core/Header.vue';
 import FooterApp from './components/core/Footer.vue';
 import OptionsGridBlock from './components/core/OptionsGridBlock.vue';
+import OptionsNewsletterSection from './components/core/OptionsNewsletterSection.vue';
+import SiteHero from './components/core/SiteHero.vue';
 import ServicesSection from './components/core/ServicesSection.vue';
 
 import SvgIcon from "vue3-icon";
@@ -41,6 +46,9 @@ app
     .component('ContactPage', ContactPage)
     .component('OptionPage', OptionPage)
     .component('OptionsPage', OptionsPage)
+    .component('AFTechnologyPage', AFTechnologyPage)
+    .component('SolutionsPage', SolutionsPage)
+    .component('SolutionsCategoryPage', SolutionsCategoryPage)
 
     .component('AdminHeader', AdminHeader)
     .component('AdminSidebar', AdminSidebar)
@@ -55,6 +63,8 @@ app
     .component('HeaderApp', HeaderApp)
     .component('FooterApp', FooterApp)
     .component('OptionsGridBlock', OptionsGridBlock)
+    .component('OptionsNewsletterSection', OptionsNewsletterSection)
+    .component('SiteHero', SiteHero)
     .component('ServicesSection', ServicesSection)
 
     .component("svg-icon", SvgIcon)

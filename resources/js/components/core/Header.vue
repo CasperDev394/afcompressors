@@ -164,6 +164,12 @@
 
 <script setup>
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import {
+    featuredMenuItems,
+    menuSections,
+    secondaryMenuItems,
+    socialItems,
+} from '../../data/siteMenu';
 
 defineProps({
     h1: {
@@ -173,85 +179,6 @@ defineProps({
 });
 
 const isMenuOpen = ref(false);
-
-const featuredMenuItems = [
-    {
-        label: 'Безмасляные поршневые компрессоры',
-        href: '#',
-        className: 'site-header__menu-link--primary',
-    },
-    {
-        label: 'Oil free PET compressors',
-        href: '#',
-        eyebrow: '15 - 40 bar',
-        eyebrowClass: 'site-header__featured-eyebrow--secondary',
-        className: 'site-header__menu-link--subitem',
-    },
-    {
-        label: 'Oil free compressors',
-        href: '#',
-        eyebrow: '8 & 10 bar',
-        eyebrowClass: 'site-header__featured-eyebrow--primary',
-        className: 'site-header__menu-link--subitem site-header__menu-link--subitem-blue',
-    },
-    {
-        label: 'Intermediate pressures',
-        href: '#',
-        className: 'site-header__menu-link--subitem',
-    },
-];
-
-const secondaryMenuItems = [
-    { label: 'Новости и события', href: '#' },
-    { label: 'Контакты', href: '/contact' },
-];
-
-const menuSections = [
-    {
-        title: 'Компания',
-        href: '#',
-        items: [
-            { label: 'о нас', href: '#' },
-            { label: 'история', href: '#' },
-        ],
-    },
-    {
-        title: 'Инновации',
-        href: '#',
-        items: [
-            { label: 'Технология AF', href: '#' },
-            { label: 'Energy- and cost-saving options', href: '#' },
-            { label: 'Regulation', href: '#', nested: true },
-            { label: 'Recovery', href: '#', nested: true },
-            { label: 'Control and Monitoring', href: '#', nested: true },
-            { label: 'Design', href: '#', nested: true },
-            { label: 'Technical features', href: '#' },
-        ],
-    },
-    {
-        title: 'развитие',
-        href: '#',
-        items: [
-            { label: 'Engineered for sustainable efficiency', href: '#' },
-            { label: 'Responsible operations', href: '#' },
-        ],
-    },
-    {
-        title: 'Услуги',
-        href: '#',
-        items: [
-            { label: 'Presale', href: '#' },
-            { label: 'Technical support and aftersale', href: '#' },
-            { label: 'Predictive maintenance', href: '#' },
-        ],
-    },
-];
-
-const socialItems = [
-    { label: 'Telegram', short: 'tg', href: '#' },
-    { label: 'VK', short: 'vk', href: '#' },
-    { label: 'YouTube', short: 'yt', href: '#' },
-];
 
 const closeMenu = () => {
     isMenuOpen.value = false;

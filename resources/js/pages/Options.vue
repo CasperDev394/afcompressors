@@ -1,11 +1,11 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const options = ref([]);
 const isLoaded = ref(false);
 
 const breadcrumbItems = [
-    { label: 'Технология AF' },
+    { label: 'Технология AF', href: '/af-technology' },
     { label: 'Опции', current: true },
 ];
 
@@ -24,17 +24,11 @@ axios.get('/options/data')
 
 <template>
     <div class="options-page">
-        <section class="options-page__hero">
-            <div class="container mx-auto px-4 h-full">
-                <div class="options-page__hero-inner">
-                    <breadcrumbs :items="breadcrumbItems" />
-
-                    <div class="options-page__hero-copy">
-                        <h1 class="options-page__title">Опции</h1>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <site-hero
+            :breadcrumbs="breadcrumbItems"
+            title="Опции"
+            :min-height="400"
+        />
 
         <section class="options-page__content">
             <div class="container mx-auto px-4">
@@ -57,37 +51,12 @@ axios.get('/options/data')
                 </div>
             </div>
         </section>
+
+        <options-newsletter-section />
     </div>
 </template>
 
 <style scoped>
-.options-page__hero {
-    min-height: 400px;
-    background: var(--color-primary-800);
-}
-
-.options-page__hero-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 48px;
-    min-height: 400px;
-    padding: 48px 0 56px;
-}
-
-.options-page__hero-copy {
-    max-width: 820px;
-}
-
-.options-page__title {
-    margin: 0;
-    color: var(--color-white);
-    font-family: stolzl, Helvetica, Arial, sans-serif;
-    font-size: clamp(3rem, 2.4rem + 1.6vw, 4.6rem);
-    font-weight: 300;
-    line-height: 0.98;
-}
-
 .options-page__content {
     padding: 72px 0 88px;
     background: var(--color-white);
@@ -104,12 +73,6 @@ axios.get('/options/data')
 }
 
 @media (max-width: 767px) {
-    .options-page__hero-inner {
-        gap: 28px;
-        min-height: 400px;
-        padding: 32px 0 40px;
-    }
-
     .options-page__content {
         padding: 52px 0 64px;
     }
