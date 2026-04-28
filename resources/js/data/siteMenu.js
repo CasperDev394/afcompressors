@@ -1,25 +1,25 @@
 export const featuredMenuItems = [
     {
         label: 'Безмасляные поршневые компрессоры',
-        href: '#',
+        href: '/solutions',
         className: 'site-header__menu-link--primary',
     },
     {
-        label: 'Oil free PET compressors',
-        href: '#',
-        eyebrow: '15 - 40 bar',
+        label: 'Безмасляные компрессоры для ПЭТ',
+        href: '/solutions/15-40-bar',
+        eyebrow: '15 - 40 бар',
         eyebrowClass: 'site-header__featured-eyebrow--secondary',
         className: 'site-header__menu-link--subitem',
     },
     {
-        label: 'Oil free compressors',
-        href: '#',
-        eyebrow: '8 & 10 bar',
+        label: 'Безмасляные компрессоры',
+        href: '/solutions/8-10-bar',
+        eyebrow: '8 & 10 бар',
         eyebrowClass: 'site-header__featured-eyebrow--primary',
         className: 'site-header__menu-link--subitem site-header__menu-link--subitem-blue',
     },
     {
-        label: 'Intermediate pressures',
+        label: 'Компрессоры промежуточного давления',
         href: '#',
         className: 'site-header__menu-link--subitem',
     },
@@ -33,10 +33,10 @@ export const secondaryMenuItems = [
 export const menuSections = [
     {
         title: 'Компания',
-        href: '#',
+        href: '/our-company',
         items: [
-            { label: 'о нас', href: '#' },
-            { label: 'история', href: '#' },
+            { label: 'о нас', href: '/our-company' },
+            { label: 'история', href: '/our-company/#history' },
         ],
     },
     {

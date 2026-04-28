@@ -10,6 +10,8 @@ Route::get('/contact', [HomeController::class, 'getContactBlade'])->name('contac
 Route::post('/contact/general', [HomeController::class, 'submitGeneralContact'])->name('contact.general.submit');
 Route::post('/contact/quote-request', [HomeController::class, 'submitQuoteRequest'])->name('contact.quote.submit');
 Route::get('/af-technology', [HomeController::class, 'getAfTechnologyBlade'])->name('af-technology');
+Route::get('/our-company', [HomeController::class, 'getOurCompanyBlade'])->name('our-company');
+Route::get('/sustainability', [HomeController::class, 'getSustainabilityBlade'])->name('sustainability');
 Route::get('/solutions', [HomeController::class, 'getSolutionsBlade'])->name('solutions.index');
 Route::get('/solutions/{category}', [HomeController::class, 'getSolutionsCategoryBlade'])->name('solutions.category');
 Route::get('/solutions/{category}/data', [HomeController::class, 'readSolutionsCategory'])->name('solutions.category.read');

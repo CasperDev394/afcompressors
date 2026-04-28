@@ -10,6 +10,8 @@ import ContactPage from './pages/Contact.vue';
 import OptionPage from './pages/Option.vue';
 import OptionsPage from './pages/Options.vue';
 import AFTechnologyPage from './pages/AFTechnology.vue';
+import OurCompanyPage from './pages/OurCompany.vue';
+import SustainabilityPage from './pages/Sustainability.vue';
 import SolutionsPage from './pages/Solutions.vue';
 import SolutionsCategoryPage from './pages/SolutionsCategory.vue';
 import SolutionsCompressorPage from './pages/SolutionsCompressor.vue';
@@ -49,6 +51,8 @@ app
     .component('OptionPage', OptionPage)
     .component('OptionsPage', OptionsPage)
     .component('AFTechnologyPage', AFTechnologyPage)
+    .component('OurCompanyPage', OurCompanyPage)
+    .component('SustainabilityPage', SustainabilityPage)
     .component('SolutionsPage', SolutionsPage)
     .component('SolutionsCategoryPage', SolutionsCategoryPage)
     .component('SolutionsCompressorPage', SolutionsCompressorPage)

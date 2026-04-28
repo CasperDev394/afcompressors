@@ -48,6 +48,22 @@ class HomeController extends Controller
         ]);
     }
 
+    public function getOurCompanyBlade(): View
+    {
+        return view('our-company', [
+            'title' => 'Наша компания | AF compressors',
+            'description' => 'Наша компания AF compressors',
+        ]);
+    }
+
+    public function getSustainabilityBlade(): View
+    {
+        return view('sustainability', [
+            'title' => 'Устойчивое развитие | AF compressors',
+            'description' => 'Устойчивое развитие AF compressors',
+        ]);
+    }
+
     public function getSolutionsBlade(): View
     {
         return view('solutions', [
