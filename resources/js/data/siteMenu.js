@@ -26,7 +26,7 @@ export const featuredMenuItems = [
 ];
 
 export const secondaryMenuItems = [
-    { label: 'Новости и события', href: '#' },
+    { label: 'Новости и события', href: '/news' },
     { label: 'Контакты', href: '/contact' },
 ];
 
@@ -39,34 +39,42 @@ export const menuSections = [
             { label: 'история', href: '/our-company/#history' },
         ],
     },
+    // {
+    //     title: 'Инновации',
+    //     href: '#',
+    //     items: [
+    //         { label: 'Технология AF', href: '/af-technology' },
+    //         { label: 'Energy- and cost-saving options', href: '/options' },
+    //         { label: 'Regulation', href: '#', nested: true },
+    //         { label: 'Recovery', href: '#', nested: true },
+    //         { label: 'Control and Monitoring', href: '#', nested: true },
+    //         { label: 'Design', href: '#', nested: true },
+    //         { label: 'Technical features', href: '#' },
+    //     ],
+    // },
+    // {
+    //     title: 'развитие',
+    //     href: '#',
+    //     items: [
+    //         { label: 'Engineered for sustainable efficiency', href: '#' },
+    //         { label: 'Responsible operations', href: '#' },
+    //     ],
+    // },
     {
-        title: 'Инновации',
-        href: '#',
+        title: 'Продажа запчастей',
+        href: '/spare-parts',
         items: [
-            { label: 'Технология AF', href: '/af-technology' },
-            { label: 'Energy- and cost-saving options', href: '/options' },
-            { label: 'Regulation', href: '#', nested: true },
-            { label: 'Recovery', href: '#', nested: true },
-            { label: 'Control and Monitoring', href: '#', nested: true },
-            { label: 'Design', href: '#', nested: true },
-            { label: 'Technical features', href: '#' },
-        ],
-    },
-    {
-        title: 'развитие',
-        href: '#',
-        items: [
-            { label: 'Engineered for sustainable efficiency', href: '#' },
-            { label: 'Responsible operations', href: '#' },
+            // { label: '', href: '#' },
+            // { label: '', href: '#' },
         ],
     },
     {
         title: 'Услуги',
-        href: '#',
+        href: '/services',
         items: [
-            { label: 'Presale', href: '#' },
-            { label: 'Technical support and aftersale', href: '#' },
-            { label: 'Predictive maintenance', href: '#' },
+            { label: 'Предпродажные услуги', href: '/services/#presale' },
+            { label: 'Техническая поддержка', href: '/services/#aftersale' },
+            { label: 'Обслуживание', href: '/services/#predictive' },
         ],
     },
 ];

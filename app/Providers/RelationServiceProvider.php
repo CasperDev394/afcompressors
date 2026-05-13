@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use App\Models\Compressor;
+use App\Models\News;
 use App\Models\Option;
 use App\Models\OptionPost;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -17,6 +18,7 @@ class RelationServiceProvider extends ServiceProvider
         Relation::morphMap([
             'ADMIN' => Admin::class,
             'COMPRESSOR' => Compressor::class,
+            'NEWS' => News::class,
             'OPTION' => Option::class,
             'OPTION_POST' => OptionPost::class,
         ]);

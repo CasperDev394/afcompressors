@@ -10,7 +10,11 @@ import ContactPage from './pages/Contact.vue';
 import OptionPage from './pages/Option.vue';
 import OptionsPage from './pages/Options.vue';
 import AFTechnologyPage from './pages/AFTechnology.vue';
+import NewsItemPage from './pages/NewsItem.vue';
+import NewsPage from './pages/News.vue';
 import OurCompanyPage from './pages/OurCompany.vue';
+import ServicesPage from './pages/Services.vue';
+import SparePartsPage from './pages/SpareParts.vue';
 import SustainabilityPage from './pages/Sustainability.vue';
 import SolutionsPage from './pages/Solutions.vue';
 import SolutionsCategoryPage from './pages/SolutionsCategory.vue';
@@ -21,6 +25,8 @@ import AdminSidebar from './components/admin/Sidebar.vue';
 import AdminInfo from './pages/admin/AdminInfo.vue';
 import AdminCompressors from './pages/admin/AdminCompressors.vue';
 import AdminCompressor from './pages/admin/AdminCompressor.vue';
+import AdminNewsList from './pages/admin/AdminNewsList.vue';
+import AdminNewsItem from './pages/admin/AdminNewsItem.vue';
 import AdminOptions from './pages/admin/AdminOptions.vue';
 import AdminOption from './pages/admin/AdminOption.vue';
 
@@ -51,7 +57,11 @@ app
     .component('OptionPage', OptionPage)
     .component('OptionsPage', OptionsPage)
     .component('AFTechnologyPage', AFTechnologyPage)
+    .component('NewsItemPage', NewsItemPage)
+    .component('NewsPage', NewsPage)
     .component('OurCompanyPage', OurCompanyPage)
+    .component('ServicesPage', ServicesPage)
+    .component('SparePartsPage', SparePartsPage)
     .component('SustainabilityPage', SustainabilityPage)
     .component('SolutionsPage', SolutionsPage)
     .component('SolutionsCategoryPage', SolutionsCategoryPage)
@@ -63,6 +73,8 @@ app
     .component('AdminInfo', AdminInfo)
     .component('AdminCompressors', AdminCompressors)
     .component('AdminCompressor', AdminCompressor)
+    .component('AdminNewsList', AdminNewsList)
+    .component('AdminNewsItem', AdminNewsItem)
     .component('AdminOptions', AdminOptions)
     .component('AdminOption', AdminOption)
 

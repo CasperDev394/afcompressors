@@ -9,25 +9,62 @@
                         </a>
                     </div>
 
-                    <button
-                        type="button"
-                        class="mob_navbar__action site-header__menu-button"
-                        :class="{ 'menu-open': isMenuOpen }"
-                        :aria-expanded="isMenuOpen ? 'true' : 'false'"
-                        aria-controls="site-navigation"
-                        :aria-label="isMenuOpen ? 'Закрыть меню' : 'Открыть меню'"
-                        @click="toggleMenu"
-                    >
-                        <span class="site-header__menu-icon icon-bars" aria-hidden="true">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </span>
-                        <span class="site-header__menu-icon icon-close" aria-hidden="true">
-                            <span></span>
-                            <span></span>
-                        </span>
-                    </button>
+                    <div class="site-header__actions">
+                        <div class="site-header__contacts" aria-label="Контакты компании">
+                            <a href="tel:+79999999999" class="site-header__contact-link">
+                                <span class="site-header__contact-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none">
+                                        <path
+                                            d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.31.56 3.57.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.06 21 3 13.94 3 5a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.26.19 2.45.56 3.57a1 1 0 0 1-.24 1.02l-2.2 2.2Z"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </span>
+                                <span class="site-header__contact-text">
+                                +7 999 999 99 99
+                                </span>
+                            </a>
+                            <a href="mailto:afcompressors@email.com" class="site-header__contact-link">
+                                <span class="site-header__contact-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none">
+                                        <path
+                                            d="M4 7.5 11.17 12.52c.48.34.72.5.98.56.23.05.47.05.7 0 .26-.06.5-.22.98-.56L21 7.5M6.4 19.5h11.2c1.68 0 2.52 0 3.16-.33a3 3 0 0 0 1.31-1.31c.33-.64.33-1.48.33-3.16V9.3c0-1.68 0-2.52-.33-3.16a3 3 0 0 0-1.31-1.31c-.64-.33-1.48-.33-3.16-.33H6.4c-1.68 0-2.52 0-3.16.33a3 3 0 0 0-1.31 1.31C1.6 6.78 1.6 7.62 1.6 9.3v5.4c0 1.68 0 2.52.33 3.16a3 3 0 0 0 1.31 1.31c.64.33 1.48.33 3.16.33Z"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </span>
+                                <span class="site-header__contact-text">
+                                afcompressors@email.com
+                                </span>
+                            </a>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="mob_navbar__action site-header__menu-button"
+                            :class="{ 'menu-open': isMenuOpen }"
+                            :aria-expanded="isMenuOpen ? 'true' : 'false'"
+                            aria-controls="site-navigation"
+                            :aria-label="isMenuOpen ? 'Закрыть меню' : 'Открыть меню'"
+                            @click="toggleMenu"
+                        >
+                            <span class="site-header__menu-icon icon-bars" aria-hidden="true">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                            <span class="site-header__menu-icon icon-close" aria-hidden="true">
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -222,6 +259,65 @@ onBeforeUnmount(() => {
 .site-header__logo {
     height: 56px;
     width: auto;
+}
+
+.site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.site-header__contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.site-header__contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-end;
+    width: fit-content;
+    color: var(--color-secondary-500);
+    font-family: stolzl, Helvetica, Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.15;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.site-header__contact-link:hover {
+    color: var(--color-secondary-400);
+}
+
+.site-header__contact-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(83, 165, 220, 0.94);
+    flex: 0 0 auto;
+    transition: color 0.25s ease;
+}
+
+.site-header__contact-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.site-header__contact-text {
+    color: #fbdfa8;
+    transition: color 0.25s ease;
+}
+
+.site-header__contact-link:hover .site-header__contact-icon {
+    color: var(--color-secondary-400);
+}
+
+.site-header__contact-link:hover .site-header__contact-text {
+    color: var(--color-secondary-400);
 }
 
 .site-header__menu-button {
@@ -605,6 +701,14 @@ onBeforeUnmount(() => {
 
     .site-header__logo {
         height: 44px;
+    }
+
+    .site-header__actions {
+        gap: 12px;
+    }
+
+    .site-header__contacts {
+        display: none;
     }
 
     .site-header__menu-button {

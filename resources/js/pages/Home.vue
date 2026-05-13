@@ -66,9 +66,9 @@ onBeforeUnmount(() => {
                             </svg>
                         </a>
 
-                        <a href="/contact/?tab=quote" class="home-page__hero-button">
-                            Запросить предложение
-                        </a>
+<!--                        <a href="/contact/?tab=quote" class="home-page__hero-button">-->
+<!--                            Запросить предложение-->
+<!--                        </a>-->
                     </div>
                 </div>
             </div>

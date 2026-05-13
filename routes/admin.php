@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CompressorModelsController;
 use App\Http\Controllers\Admin\CompressorsController;
+use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\OptionsController;
 use App\Http\Controllers\Admin\OptionPostsController;
 use App\Http\Controllers\Admin\SidebarController;
@@ -45,4 +46,17 @@ Route::prefix('options')->group(function () {
     Route::post('{option:name_slug}/posts/{post:name_slug}/delete', [OptionPostsController::class, 'delete']);
 
     Route::view('{option:name_slug}', 'admin.options.item');
+});
+
+Route::prefix('news')->group(function () {
+    Route::view('/', 'admin.news.list');
+    Route::get('/getList', [NewsController::class, 'getList']);
+
+    Route::view('create', 'admin.news.item');
+    Route::post('create', [NewsController::class, 'create']);
+    Route::get('{news:name_slug}/read', [NewsController::class, 'read']);
+    Route::post('{news:name_slug}/update', [NewsController::class, 'update']);
+    Route::post('{news:name_slug}/delete', [NewsController::class, 'delete']);
+
+    Route::view('{news:name_slug}', 'admin.news.item');
 });

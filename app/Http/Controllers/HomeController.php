@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Compressor;
 use App\Models\CompressorModel;
+use App\Models\News;
 use App\Models\Option;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -61,6 +62,91 @@ class HomeController extends Controller
         return view('sustainability', [
             'title' => 'Устойчивое развитие | AF compressors',
             'description' => 'Устойчивое развитие AF compressors',
+        ]);
+    }
+
+    public function getServicesBlade(): View
+    {
+        return view('services', [
+            'title' => 'Услуги | AF compressors',
+            'description' => 'Услуги AF compressors',
+        ]);
+    }
+
+    public function getSparePartsBlade(): View
+    {
+        return view('spare-parts', [
+            'title' => 'Продажа запчастей | AF compressors',
+            'description' => 'Продажа запчастей AF compressors',
+        ]);
+    }
+
+    public function getNewsBlade(): View
+    {
+        return view('news', [
+            'title' => 'Новости | AF compressors',
+            'description' => 'Новости AF compressors',
+        ]);
+    }
+
+    public function readNews(): JsonResponse
+    {
+        $items = News::query()
+            ->where('published', true)
+            ->with('attachments')
+            ->orderByDesc('id')
+            ->get();
+
+        return response()->json([
+            'data' => $items->map(function (News $news) {
+                $image = $news->attachments->first();
+
+                return [
+                    'id' => $news->id,
+                    'name' => $news->name,
+                    'name_slug' => $news->name_slug,
+                    'href' => '/news/' . $news->name_slug,
+                    'image' => $image ? [
+                        'id' => $image->id,
+                        'url' => $image->url,
+                        'title' => $image->title,
+                    ] : null,
+                ];
+            })->values(),
+        ]);
+    }
+
+    public function getNewsItemBlade(News $news): View
+    {
+        $this->abortIfNewsUnavailable($news);
+
+        return view('news-item', [
+            'title' => $news->name . ' | AF compressors',
+            'description' => $news->name,
+            'news' => $news,
+        ]);
+    }
+
+    public function readNewsItem(News $news): JsonResponse
+    {
+        $this->abortIfNewsUnavailable($news);
+
+        $news->load('attachments');
+
+        return response()->json([
+            'data' => [
+                'id' => $news->id,
+                'name' => $news->name,
+                'name_slug' => $news->name_slug,
+                'description' => $news->description,
+                'images' => $news->attachments->map(function ($attachment) {
+                    return [
+                        'id' => $attachment->id,
+                        'url' => $attachment->url,
+                        'title' => $attachment->title,
+                    ];
+                })->values(),
+            ],
         ]);
     }
 
@@ -273,6 +359,13 @@ class HomeController extends Controller
     protected function abortIfOptionUnavailable(Option $option): void
     {
         if (!$option->published) {
+            throw new NotFoundHttpException();
+        }
+    }
+
+    protected function abortIfNewsUnavailable(News $news): void
+    {
+        if (!$news->published) {
             throw new NotFoundHttpException();
         }
     }

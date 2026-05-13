@@ -12,6 +12,12 @@ Route::post('/contact/quote-request', [HomeController::class, 'submitQuoteReques
 Route::get('/af-technology', [HomeController::class, 'getAfTechnologyBlade'])->name('af-technology');
 Route::get('/our-company', [HomeController::class, 'getOurCompanyBlade'])->name('our-company');
 Route::get('/sustainability', [HomeController::class, 'getSustainabilityBlade'])->name('sustainability');
+Route::get('/services', [HomeController::class, 'getServicesBlade'])->name('services');
+Route::get('/spare-parts', [HomeController::class, 'getSparePartsBlade'])->name('spare-parts');
+Route::get('/news', [HomeController::class, 'getNewsBlade'])->name('news.index');
+Route::get('/news/data', [HomeController::class, 'readNews'])->name('news.index.read');
+Route::get('/news/{news:name_slug}/data', [HomeController::class, 'readNewsItem'])->name('news.read');
+Route::get('/news/{news:name_slug}', [HomeController::class, 'getNewsItemBlade'])->name('news.show');
 Route::get('/solutions', [HomeController::class, 'getSolutionsBlade'])->name('solutions.index');
 Route::get('/solutions/{category}', [HomeController::class, 'getSolutionsCategoryBlade'])->name('solutions.category');
 Route::get('/solutions/{category}/data', [HomeController::class, 'readSolutionsCategory'])->name('solutions.category.read');
