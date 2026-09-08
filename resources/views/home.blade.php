@@ -1,14 +1,14 @@
 @extends('layouts.app',
     [
-        'title' => 'AF compressors',
-        'description' => 'AF compressors'
+        'title' => $title,
+        'description' => $description
     ]
 )
 
 @section('content')
 
     @include('core.header')
-    <home></home>
+    <home home-h1="{{ $siteSettings->home_h1 }}"></home>
     @include('core.footer')
 
 @endsection

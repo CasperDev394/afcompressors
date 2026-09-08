@@ -1,12 +1,25 @@
 <script setup>
+import { computed } from 'vue';
 import {
     certificateItems,
     featuredMenuItems,
-    hotline,
     menuSections,
     secondaryMenuItems,
     socialItems,
 } from '../../data/siteMenu';
+
+const props = defineProps({
+    phone: {
+        type: String,
+        default: '+7 999 999 99 99',
+    },
+});
+
+const hotline = computed(() => ({
+    href: `tel:${props.phone.replace(/[^\d+]/g, '')}`,
+    label: 'Помощь по горячей линии',
+    number: props.phone,
+}));
 
 const legalLinks = [
     { label: 'Условия и положения', href: '/terms-and-conditions' },

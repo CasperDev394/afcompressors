@@ -29,6 +29,7 @@ import AdminNewsList from './pages/admin/AdminNewsList.vue';
 import AdminNewsItem from './pages/admin/AdminNewsItem.vue';
 import AdminOptions from './pages/admin/AdminOptions.vue';
 import AdminOption from './pages/admin/AdminOption.vue';
+import AdminSiteSettings from './pages/admin/AdminSiteSettings.vue';
 
 import AttachmentGallery from './components/core/AttachmentGallery.vue';
 import Breadcrumbs from './components/core/Breadcrumbs.vue';
@@ -77,6 +78,7 @@ app
     .component('AdminNewsItem', AdminNewsItem)
     .component('AdminOptions', AdminOptions)
     .component('AdminOption', AdminOption)
+    .component('AdminSiteSettings', AdminSiteSettings)
 
     .component('Breadcrumbs', Breadcrumbs)
     .component('HeaderApp', HeaderApp)

@@ -16,7 +16,7 @@
             <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                 <div class="space-y-6">
                     <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700">
+                        <label for="email" class="block text-sm font-medium text-gray-700">
                             Email
                         </label>
                         <div class="mt-1">
@@ -29,7 +29,7 @@
                                 autofocus
                                 placeholder="email"
                                 required
-                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 caret-gray-900 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                             >
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                 v-model="password"
                                 type="password"
                                 required
-                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900 caret-gray-900 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                             >
                         </div>
                     </div>
@@ -171,10 +171,7 @@
 </template>
 <script setup>
 import {ref} from 'vue'
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
-
-
-const email = ref(null);
-const password = ref(null);
+const email = ref('');
+const password = ref('');
 
 </script>

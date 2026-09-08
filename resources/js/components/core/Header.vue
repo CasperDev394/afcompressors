@@ -11,7 +11,7 @@
 
                     <div class="site-header__actions">
                         <div class="site-header__contacts" aria-label="Контакты компании">
-                            <a href="tel:+79999999999" class="site-header__contact-link">
+                            <a :href="phoneHref" class="site-header__contact-link">
                                 <span class="site-header__contact-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none">
                                         <path
@@ -24,10 +24,10 @@
                                     </svg>
                                 </span>
                                 <span class="site-header__contact-text">
-                                +7 999 999 99 99
+                                {{ phone }}
                                 </span>
                             </a>
-                            <a href="mailto:afcompressors@email.com" class="site-header__contact-link">
+                            <a :href="emailHref" class="site-header__contact-link">
                                 <span class="site-header__contact-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none">
                                         <path
@@ -40,7 +40,7 @@
                                     </svg>
                                 </span>
                                 <span class="site-header__contact-text">
-                                afcompressors@email.com
+                                {{ email }}
                                 </span>
                             </a>
                         </div>
@@ -174,7 +174,7 @@
                                 </div>
                             </div>
 
-                            <a class="site-header__hotline" href="tel:+79999999999">
+                            <a class="site-header__hotline" :href="phoneHref">
                                 <span class="site-header__hotline-icon" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" fill="none">
                                         <path
@@ -188,7 +188,7 @@
                                 </span>
                                 <span class="site-header__hotline-copy">
                                     <span class="site-header__hotline-label">Горячая линия</span>
-                                    <span class="site-header__hotline-number">+7 999 999 99 99</span>
+                                    <span class="site-header__hotline-number">{{ phone }}</span>
                                 </span>
                             </a>
                         </div>
@@ -200,7 +200,7 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import {
     featuredMenuItems,
     menuSections,
@@ -208,12 +208,23 @@ import {
     socialItems,
 } from '../../data/siteMenu';
 
-defineProps({
+const props = defineProps({
     h1: {
         type: String,
         required: false,
     },
+    phone: {
+        type: String,
+        default: '+7 999 999 99 99',
+    },
+    email: {
+        type: String,
+        default: 'afcompressors@email.com',
+    },
 });
+
+const phoneHref = computed(() => `tel:${props.phone.replace(/[^\d+]/g, '')}`);
+const emailHref = computed(() => `mailto:${props.email.trim()}`);
 
 const isMenuOpen = ref(false);
 

@@ -6,6 +6,7 @@ use App\Models\Compressor;
 use App\Models\CompressorModel;
 use App\Models\News;
 use App\Models\Option;
+use App\Models\SiteSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -25,7 +26,13 @@ class HomeController extends Controller
 
     public function getBlade(): View
     {
-        return view('home');
+        $settings = SiteSetting::current();
+
+        return view('home', [
+            'siteSettings' => $settings,
+            'title' => $settings->home_title,
+            'description' => $settings->home_description,
+        ]);
     }
 
     public function getContactBlade(): View

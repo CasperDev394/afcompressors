@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\OptionsController;
 use App\Http\Controllers\Admin\OptionPostsController;
 use App\Http\Controllers\Admin\SidebarController;
+use App\Http\Controllers\Admin\SiteSettingsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,6 +15,12 @@ Route::prefix('info')->group(function () {
 });
 
 Route::get('/sidebar-badges', [SidebarController::class, 'badges']);
+
+Route::prefix('settings')->group(function () {
+    Route::view('/', 'admin.settings');
+    Route::get('/read', [SiteSettingsController::class, 'read']);
+    Route::post('/update', [SiteSettingsController::class, 'update']);
+});
 
 
 Route::prefix('compressors')->group(function () {

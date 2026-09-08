@@ -1,3 +1,1 @@
-<footer-app >
-
-</footer-app>
+<footer-app phone="{{ $siteSettings->phone }}"></footer-app>

@@ -38,6 +38,7 @@ import {
     faAnglesLeft,
     faAnglesRight,
     faGaugeHigh,
+    faGear,
     faLandmark,
     faNewspaper,
     faSliders,
@@ -55,6 +56,7 @@ const menuItems = [
     { key: 'compressors', href: '/admin/compressors', label: 'Компрессоры', icon: faGaugeHigh },
     { key: 'news', href: '/admin/news', label: 'Новости', icon: faNewspaper },
     { key: 'options', href: '/admin/options', label: 'Опции', icon: faSliders },
+    { key: 'settings', href: '/admin/settings', label: 'Настройки', icon: faGear },
 ];
 
 const currentUrl = () => {

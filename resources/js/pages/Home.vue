@@ -1,6 +1,13 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
+defineProps({
+    homeH1: {
+        type: String,
+        default: 'Energy Sobriety',
+    },
+});
+
 const scrollY = ref(0);
 
 const handleScroll = () => {
@@ -46,7 +53,7 @@ onBeforeUnmount(() => {
                     </div>
 
                     <div class="home-page__hero-left">
-                        <h1 class="home-page__hero-title">Energy Sobriety</h1>
+                        <h1 class="home-page__hero-title">{{ homeH1 }}</h1>
                         <p class="home-page__hero-description">
                             Наиболее эффективные и долговечные компрессорные решения, разработанные для обеспечения вашего успеха.
                         </p>

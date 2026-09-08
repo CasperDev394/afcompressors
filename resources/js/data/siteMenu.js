@@ -85,12 +85,6 @@ export const socialItems = [
     { label: 'YouTube', short: 'yt', href: '#' },
 ];
 
-export const hotline = {
-    href: 'tel:+79999999999',
-    label: 'Помощь по горячей линии',
-    number: '+7 999 999 99 99',
-};
-
 export const certificateItems = [
     { src: '/img/certificats/apragaz_logo_2.jpg', alt: 'Apragaz' },
     { src: '/img/certificats/logo-ecovadis-white.svg', alt: 'Ecovadis' },

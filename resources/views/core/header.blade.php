@@ -1,1 +1,4 @@
-<header-app></header-app>
+<header-app
+    phone="{{ $siteSettings->phone }}"
+    email="{{ $siteSettings->email }}"
+></header-app>
