@@ -33,15 +33,41 @@ deploy:
   script:
     - |
       ssh "$SERVER_USER@$SERVER_HOST" "
+        set -eu
         cd /srv &&
-        export APP_IMAGE='$IMAGE_LATEST' &&
+        export APP_IMAGE='$IMAGE_TAG' &&
         echo '$CI_REGISTRY_PASSWORD' | docker login '$CI_REGISTRY' -u '$CI_REGISTRY_USER' --password-stdin &&
         docker compose pull app &&
-        docker compose up -d app &&
-        docker compose exec -T app php artisan migrate --force &&
-        docker compose exec -T app php artisan config:cache &&
-        docker compose exec -T app php artisan route:cache &&
-        docker compose exec -T app php artisan storage:link
+        docker compose up -d --force-recreate app &&
+        docker compose exec -T app sh -lc '
+          mkdir -p \
+            storage/app/public \
+            storage/framework/cache/data \
+            storage/framework/sessions \
+            storage/framework/testing \
+            storage/framework/views \
+            storage/logs \
+            bootstrap/cache &&
+          chown -R www-data:www-data storage bootstrap/cache &&
+          chmod -R ug+rwX storage bootstrap/cache
+        ' &&
+        docker compose exec -T --user www-data app php artisan optimize:clear &&
+        docker compose exec -T --user www-data app php artisan migrate --force &&
+        docker compose exec -T --user www-data app php artisan config:cache &&
+        docker compose exec -T --user www-data app php artisan route:cache &&
+        docker compose exec -T --user www-data app php artisan view:cache &&
+        docker compose exec -T --user www-data app php artisan storage:link &&
+        docker compose restart app &&
+        docker compose exec -T app curl \
+          --fail --silent --show-error \
+          --retry 10 --retry-connrefused --retry-delay 2 --max-time 20 \
+          --output /dev/null \
+          http://127.0.0.1/up &&
+        curl \
+          --fail --silent --show-error \
+          --retry 10 --retry-all-errors --retry-delay 2 --max-time 20 \
+          --output /dev/null \
+          https://afcompressors.ru/up
       "
   only:
     - main
