@@ -12,17 +12,16 @@ export const featuredMenuItems = [
         className: 'site-header__menu-link--subitem',
     },
     {
-        label: 'Безмасляные компрессоры',
         href: '/solutions/8-10-bar',
         eyebrow: '8 & 10 бар',
         eyebrowClass: 'site-header__featured-eyebrow--primary',
         className: 'site-header__menu-link--subitem site-header__menu-link--subitem-blue',
     },
-    {
-        label: 'Компрессоры промежуточного давления',
-        href: '#',
-        className: 'site-header__menu-link--subitem',
-    },
+    // {
+    //     label: 'Компрессоры промежуточного давления',
+    //     href: '#',
+    //     className: 'site-header__menu-link--subitem',
+    // },
 ];
 
 export const secondaryMenuItems = [
