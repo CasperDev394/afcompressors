@@ -53,7 +53,7 @@ const getFooterEyebrowClass = (item) => item.eyebrowClass?.replaceAll('site-head
                                     >
                                         {{ item.eyebrow }}
                                     </span>
-                                    <span>{{ item.label }}</span>
+                                    <span v-if="item.label">{{ item.label }}</span>
                                 </a>
                             </div>
 
