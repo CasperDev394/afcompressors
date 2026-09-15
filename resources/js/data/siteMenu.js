@@ -59,14 +59,14 @@ export const menuSections = [
     //         { label: 'Responsible operations', href: '#' },
     //     ],
     // },
-    {
-        title: 'Продажа запчастей',
-        href: '/spare-parts',
-        items: [
-            // { label: '', href: '#' },
-            // { label: '', href: '#' },
-        ],
-    },
+    // {
+    //     title: 'Продажа запчастей',
+    //     href: '/spare-parts',
+    //     items: [
+    //         // { label: '', href: '#' },
+    //         // { label: '', href: '#' },
+    //     ],
+    // },
     {
         title: 'Услуги',
         href: '/services',
