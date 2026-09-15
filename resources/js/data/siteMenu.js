@@ -80,9 +80,8 @@ export const menuSections = [
 ];
 
 export const socialItems = [
-    { label: 'Telegram', short: 'tg', href: '#' },
-    { label: 'VK', short: 'vk', href: '#' },
-    { label: 'YouTube', short: 'yt', href: '#' },
+
+    { label: 'YouTube', short: 'yt', href: 'https://www.youtube.com/@afcompressorsafinternation1995' },
 ];
 
 export const certificateItems = [

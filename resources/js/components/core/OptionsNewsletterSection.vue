@@ -1,6 +1,6 @@
 <script setup>
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 
 const form = reactive({
     email: '',
@@ -10,6 +10,12 @@ const form = reactive({
 const errors = reactive({
     email: '',
     consent: '',
+});
+
+const isSubmitting = ref(false);
+const feedback = reactive({
+    type: '',
+    message: '',
 });
 
 const validateForm = () => {
@@ -29,13 +35,46 @@ const resetForm = () => {
     errors.consent = '';
 };
 
-const submitNewsletter = () => {
-    if (!validateForm()) {
+const submitNewsletter = async () => {
+    if (isSubmitting.value || !validateForm()) {
         return;
     }
 
-    // TODO: implement newsletter subscription request.
-    resetForm();
+    isSubmitting.value = true;
+    feedback.type = '';
+    feedback.message = '';
+
+    try {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+        const response = await window.axios.post(
+            '/newsletter/subscribe',
+            { ...form },
+            {
+                headers: {
+                    Accept: 'application/json',
+                    ...(csrfToken ? { 'X-CSRF-TOKEN': csrfToken } : {}),
+                },
+            },
+        );
+
+        resetForm();
+        feedback.type = 'success';
+        feedback.message = response.data.message;
+    } catch (error) {
+        const response = error.response;
+
+        if (response?.status === 422 && response.data.errors) {
+            errors.email = response.data.errors.email?.[0] || '';
+            errors.consent = response.data.errors.consent?.[0] || '';
+        }
+
+        feedback.type = 'error';
+        feedback.message = response?.status === 429
+            ? 'Слишком много попыток. Пожалуйста, повторите отправку через минуту.'
+            : response?.data?.message || 'Не удалось отправить заявку. Пожалуйста, попробуйте ещё раз позже.';
+    } finally {
+        isSubmitting.value = false;
+    }
 };
 </script>
 
@@ -44,20 +83,33 @@ const submitNewsletter = () => {
         <div class="container mx-auto px-4">
             <div class="options-newsletter__panel">
                 <div class="options-newsletter__left">
-                    <form class="options-newsletter__form" @submit.prevent="submitNewsletter">
+                    <form
+                        class="options-newsletter__form"
+                        action="/newsletter/subscribe"
+                        method="post"
+                        @submit.prevent="submitNewsletter"
+                    >
                         <h2 class="options-newsletter__title">Подпишитесь на нашу рассылку</h2>
 
                         <div class="options-newsletter__field-wrap">
                             <input
                                 v-model="form.email"
                                 type="email"
+                                name="email"
                                 class="options-newsletter__input"
                                 placeholder="Email"
                                 autocomplete="email"
+                                :aria-invalid="errors.email ? 'true' : 'false'"
+                                required
                                 @input="errors.email = ''"
                             >
 
-                            <button type="submit" class="options-newsletter__submit" aria-label="Подписаться">
+                            <button
+                                type="submit"
+                                class="options-newsletter__submit"
+                                :disabled="isSubmitting"
+                                :aria-label="isSubmitting ? 'Отправка' : 'Подписаться'"
+                            >
                                 <svg-icon size="18" :fa-icon="faArrowRight" />
                             </button>
                         </div>
@@ -68,7 +120,9 @@ const submitNewsletter = () => {
                             <input
                                 v-model="form.consent"
                                 type="checkbox"
+                                name="consent"
                                 class="options-newsletter__checkbox"
+                                required
                                 @change="errors.consent = ''"
                             >
                             <span>
@@ -82,6 +136,15 @@ const submitNewsletter = () => {
                         </label>
 
                         <p v-if="errors.consent" class="options-newsletter__error">{{ errors.consent }}</p>
+
+                        <p
+                            v-if="feedback.message"
+                            class="options-newsletter__feedback"
+                            :class="`options-newsletter__feedback--${feedback.type}`"
+                            :role="feedback.type === 'error' ? 'alert' : 'status'"
+                        >
+                            {{ feedback.message }}
+                        </p>
                     </form>
                 </div>
 
@@ -204,6 +267,12 @@ const submitNewsletter = () => {
     transform: translateX(4px);
 }
 
+.options-newsletter__submit:disabled {
+    cursor: wait;
+    opacity: 0.65;
+    transform: none;
+}
+
 .options-newsletter__field-wrap:focus-within .options-newsletter__submit {
     border-color: rgba(145, 211, 255, 0.72);
     background: rgba(83, 165, 220, 0.28);
@@ -242,6 +311,24 @@ const submitNewsletter = () => {
     color: var(--color-error-soft);
     font-size: 0.88rem;
     line-height: 1.4;
+}
+
+.options-newsletter__feedback {
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.options-newsletter__feedback--success {
+    background: rgba(78, 196, 112, 0.18);
+    color: #b9f2c8;
+}
+
+.options-newsletter__feedback--error {
+    background: rgba(218, 72, 72, 0.2);
+    color: var(--color-error-soft);
 }
 
 .options-newsletter__divider {

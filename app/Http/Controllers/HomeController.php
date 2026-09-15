@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WebsiteFormSubmitted;
 use App\Models\Compressor;
 use App\Models\CompressorModel;
 use App\Models\News;
@@ -9,8 +10,10 @@ use App\Models\Option;
 use App\Models\SiteSetting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 class HomeController extends Controller
 {
@@ -353,14 +356,67 @@ class HomeController extends Controller
 
     public function submitGeneralContact(Request $request): JsonResponse
     {
-        // TODO: implement general contacts form submission.
-        return response()->json(['status' => 'todo'], 202);
+        return $this->submitContactForm($request, 'general');
     }
 
     public function submitQuoteRequest(Request $request): JsonResponse
     {
-        // TODO: implement quote request form submission.
-        return response()->json(['status' => 'todo'], 202);
+        return $this->submitContactForm($request, 'quote');
+    }
+
+    public function submitNewsletter(Request $request): JsonResponse
+    {
+        $submission = $request->validate([
+            'email' => ['required', 'email:rfc', 'max:255'],
+            'consent' => ['accepted'],
+        ]);
+
+        return $this->sendWebsiteForm('newsletter', $submission);
+    }
+
+    protected function submitContactForm(Request $request, string $formType): JsonResponse
+    {
+        $rules = [
+            'lastName' => ['required', 'string', 'max:100'],
+            'firstName' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'email:rfc', 'max:255'],
+            'phone' => ['required', 'string', 'max:50'],
+            'companyName' => ['required', 'string', 'max:255'],
+            'message' => ['required', 'string', 'max:5000'],
+            'consent' => ['accepted'],
+        ];
+
+        if ($formType === 'quote') {
+            $rules['country'] = ['required', 'string', 'max:100'];
+            $rules['productType'] = ['required', 'string', 'in:Высокое давление,Низкое давление,Прочее'];
+        }
+
+        return $this->sendWebsiteForm($formType, $request->validate($rules));
+    }
+
+    protected function sendWebsiteForm(string $formType, array $submission): JsonResponse
+    {
+        if (app()->isProduction() && in_array(config('mail.default'), ['log', 'array'], true)) {
+            return response()->json([
+                'message' => 'Отправка сообщений временно недоступна. Пожалуйста, попробуйте ещё раз позже.',
+            ], 503);
+        }
+
+        try {
+            Mail::to(config('mail.website_forms_recipient'))->send(
+                new WebsiteFormSubmitted($formType, $submission)
+            );
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return response()->json([
+                'message' => 'Не удалось отправить сообщение. Пожалуйста, попробуйте ещё раз позже.',
+            ], 503);
+        }
+
+        return response()->json([
+            'message' => 'Спасибо! Ваше сообщение успешно отправлено.',
+        ]);
     }
 
     protected function abortIfOptionUnavailable(Option $option): void

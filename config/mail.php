@@ -115,4 +115,6 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    'website_forms_recipient' => env('WEBSITE_FORMS_MAIL_TO', 'office-afrus@afcompressors.com'),
+
 ];

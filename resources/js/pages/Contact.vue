@@ -10,6 +10,12 @@ const quoteSubmitUrl = '/contact/quote-request';
 
 const activeTab = ref('general');
 const tabsSection = ref(null);
+const isSubmitting = ref(false);
+const errors = ref({});
+const feedback = reactive({
+    type: '',
+    message: '',
+});
 
 const tabs = {
     general: {
@@ -75,6 +81,9 @@ const showProductType = computed(() => activeTab.value === 'quote');
 
 const setActiveTab = (tabKey) => {
     activeTab.value = tabKey;
+    errors.value = {};
+    feedback.type = '';
+    feedback.message = '';
 };
 
 const syncTabFromQuery = async () => {
@@ -89,23 +98,65 @@ const syncTabFromQuery = async () => {
     tabsSection.value?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
-const submitGeneralContacts = () => {
-    // TODO: wire general contacts form submission to /contact/general.
-    console.info('TODO submit general contacts', generalForm);
+const resetActiveForm = () => {
+    Object.assign(activeForm.value, {
+        lastName: '',
+        firstName: '',
+        email: '',
+        phone: '',
+        companyName: '',
+        ...(activeTab.value === 'quote' ? {
+            country: '',
+            productType: 'Высокое давление',
+        } : {}),
+        message: '',
+        consent: false,
+    });
 };
 
-const submitQuoteRequest = () => {
-    // TODO: wire quote request form submission to /contact/quote-request.
-    console.info('TODO submit quote request', quoteForm);
-};
-
-const handleSubmit = () => {
-    if (activeTab.value === 'general') {
-        submitGeneralContacts();
+const handleSubmit = async () => {
+    if (isSubmitting.value) {
         return;
     }
 
-    submitQuoteRequest();
+    errors.value = {};
+    feedback.type = '';
+    feedback.message = '';
+    isSubmitting.value = true;
+
+    try {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+        const response = await window.axios.post(
+            activeTabConfig.value.submitUrl,
+            { ...activeForm.value },
+            {
+                headers: {
+                    Accept: 'application/json',
+                    ...(csrfToken ? { 'X-CSRF-TOKEN': csrfToken } : {}),
+                },
+            },
+        );
+
+        feedback.type = 'success';
+        feedback.message = response.data.message;
+        resetActiveForm();
+    } catch (error) {
+        const response = error.response;
+
+        if (response?.status === 422 && response.data.errors) {
+            errors.value = Object.fromEntries(
+                Object.entries(response.data.errors).map(([field, messages]) => [field, messages[0]]),
+            );
+        }
+
+        feedback.type = 'error';
+        feedback.message = response?.status === 429
+            ? 'Слишком много попыток. Пожалуйста, повторите отправку через минуту.'
+            : response?.data?.message || 'Не удалось отправить сообщение. Пожалуйста, попробуйте ещё раз позже.';
+    } finally {
+        isSubmitting.value = false;
+    }
+
 };
 
 onMounted(() => {
@@ -177,7 +228,7 @@ onMounted(() => {
                             <div class="contact-page__hotline-copy">
                                 <p class="contact-page__hotline-label">ПОМОЩЬ ПО ГОРЯЧЕЙ ЛИНИИ</p>
                                 <p class="contact-page__hotline-meta">7/24 По всему миру</p>
-                                <a href="tel:+3242399660" class="contact-page__hotline-phone">+32 4 239 96 60</a>
+                                <a href="tel:+79956638115" class="contact-page__hotline-phone">+7 995 663 81 15</a>
                             </div>
                         </div>
                     </div>
@@ -205,7 +256,10 @@ onMounted(() => {
                                             :name="field.key"
                                             :autocomplete="field.autocomplete"
                                             class="contact-page__input"
+                                            :aria-invalid="errors[field.key] ? 'true' : 'false'"
+                                            required
                                         >
+                                        <span v-if="errors[field.key]" class="contact-page__error">{{ errors[field.key] }}</span>
                                     </label>
 
                                     <label v-if="showProductType" class="contact-page__field contact-page__field--full">
@@ -214,11 +268,14 @@ onMounted(() => {
                                             v-model="activeForm.productType"
                                             name="productType"
                                             class="contact-page__input contact-page__select"
+                                            :aria-invalid="errors.productType ? 'true' : 'false'"
+                                            required
                                         >
                                             <option value="Высокое давление">Высокое давление</option>
                                             <option value="Низкое давление">Низкое давление</option>
                                             <option value="Прочее">Прочее</option>
                                         </select>
+                                        <span v-if="errors.productType" class="contact-page__error">{{ errors.productType }}</span>
                                     </label>
                                 </div>
                             </div>
@@ -232,7 +289,10 @@ onMounted(() => {
                                         v-model="activeForm.message"
                                         name="message"
                                         class="contact-page__input contact-page__textarea"
+                                        :aria-invalid="errors.message ? 'true' : 'false'"
+                                        required
                                     ></textarea>
+                                    <span v-if="errors.message" class="contact-page__error">{{ errors.message }}</span>
                                 </label>
                             </div>
 
@@ -242,16 +302,27 @@ onMounted(() => {
                                     type="checkbox"
                                     name="consent"
                                     class="contact-page__checkbox"
+                                    required
                                 >
                                 <span>
                                     Я согласен с тем, что компания AF Compressors может использовать мои персональные данные
                                     в соответствии со своей политикой конфиденциальности.
                                 </span>
                             </label>
+                            <span v-if="errors.consent" class="contact-page__error">{{ errors.consent }}</span>
+
+                            <p
+                                v-if="feedback.message"
+                                class="contact-page__feedback"
+                                :class="`contact-page__feedback--${feedback.type}`"
+                                :role="feedback.type === 'error' ? 'alert' : 'status'"
+                            >
+                                {{ feedback.message }}
+                            </p>
 
                             <div class="contact-page__actions">
-                                <button type="submit" class="contact-page__submit">
-                                    <span>ОТПРАВЛЯТЬ</span>
+                                <button type="submit" class="contact-page__submit" :disabled="isSubmitting">
+                                    <span>{{ isSubmitting ? 'ОТПРАВКА…' : 'ОТПРАВИТЬ' }}</span>
                                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                         <path
                                             d="M5 12h14M13 6l6 6-6 6"
@@ -516,6 +587,34 @@ onMounted(() => {
     box-shadow: 0 0 0 3px rgba(83, 165, 220, 0.15);
 }
 
+.contact-page__input[aria-invalid="true"] {
+    border-color: #c73535;
+}
+
+.contact-page__error {
+    color: #a51f1f;
+    font-size: 0.86rem;
+    line-height: 1.4;
+}
+
+.contact-page__feedback {
+    margin: 0;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+.contact-page__feedback--success {
+    background: #e5f6e9;
+    color: #176b2c;
+}
+
+.contact-page__feedback--error {
+    background: #fdeaea;
+    color: #8c1b1b;
+}
+
 .contact-page__select {
     appearance: none;
     background-image:
@@ -576,6 +675,11 @@ onMounted(() => {
 .contact-page__submit:hover {
     background: var(--color-secondary-500);
     color: var(--color-white);
+}
+
+.contact-page__submit:disabled {
+    cursor: wait;
+    opacity: 0.65;
 }
 
 .contact-page__submit svg {

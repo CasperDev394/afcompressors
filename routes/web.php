@@ -7,8 +7,15 @@ use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/', [HomeController::class, 'getBlade'])->name('home');
 Route::get('/contact', [HomeController::class, 'getContactBlade'])->name('contact');
-Route::post('/contact/general', [HomeController::class, 'submitGeneralContact'])->name('contact.general.submit');
-Route::post('/contact/quote-request', [HomeController::class, 'submitQuoteRequest'])->name('contact.quote.submit');
+Route::post('/contact/general', [HomeController::class, 'submitGeneralContact'])
+    ->middleware('throttle:5,1')
+    ->name('contact.general.submit');
+Route::post('/contact/quote-request', [HomeController::class, 'submitQuoteRequest'])
+    ->middleware('throttle:5,1')
+    ->name('contact.quote.submit');
+Route::post('/newsletter/subscribe', [HomeController::class, 'submitNewsletter'])
+    ->middleware('throttle:5,1')
+    ->name('newsletter.subscribe');
 Route::get('/af-technology', [HomeController::class, 'getAfTechnologyBlade'])->name('af-technology');
 Route::get('/our-company', [HomeController::class, 'getOurCompanyBlade'])->name('our-company');
 Route::get('/sustainability', [HomeController::class, 'getSustainabilityBlade'])->name('sustainability');
