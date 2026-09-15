@@ -20,7 +20,7 @@
                         >
                             <option class="text-black" value="">Категория давления</option>
                             <option class="text-black" value="15-40-bar">15 – 40 бар</option>
-                            <option class="text-black" value="8-10-bar">8 и 10 бар</option>
+<!--                            <option class="text-black" value="8-10-bar">8 и 10 бар</option>-->
                         </select>
 
                         <input

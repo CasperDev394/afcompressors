@@ -11,12 +11,12 @@ export const featuredMenuItems = [
         eyebrowClass: 'site-header__featured-eyebrow--secondary',
         className: 'site-header__menu-link--subitem',
     },
-    {
-        href: '/solutions/8-10-bar',
-        eyebrow: '8 & 10 бар',
-        eyebrowClass: 'site-header__featured-eyebrow--primary',
-        className: 'site-header__menu-link--subitem site-header__menu-link--subitem-blue',
-    },
+    // {
+    //     href: '/solutions/8-10-bar',
+    //     eyebrow: '8 & 10 бар',
+    //     eyebrowClass: 'site-header__featured-eyebrow--primary',
+    //     className: 'site-header__menu-link--subitem site-header__menu-link--subitem-blue',
+    // },
     // {
     //     label: 'Компрессоры промежуточного давления',
     //     href: '#',

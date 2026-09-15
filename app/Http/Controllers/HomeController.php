@@ -446,9 +446,9 @@ class HomeController extends Controller
             '15-40-bar' => [
                 'meta_title' => '15 – 40 бар',
             ],
-            '8-10-bar' => [
-                'meta_title' => '8 и 10 бар',
-            ],
+//            '8-10-bar' => [
+//                'meta_title' => '8 и 10 бар',
+//            ],
         ];
 
         if (!isset($categories[$category])) {
